@@ -1,0 +1,63 @@
+
+.allPosts {
+    display: grid;
+    gap: 3px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    
+}
+
+nav {
+    display: grid;
+    place-items: center;
+}
+
+.following, .followers {
+    display: inline-block;
+}
+
+.following > p, .followers > p {
+    margin: 0;
+}
+
+#followUser {
+    margin-top: 10px;
+}
+
+textarea {
+    border-radius: 5px;
+    border-width: 2px;
+    border-color: black;
+    height: 100%;
+
+}
+
+textarea:focus {
+    box-shadow: 5px 5px 6px rgb(161, 198, 218);
+}
+
+#postButton {
+    display: block;
+    width: 100px;
+}
+
+.formDiv {
+    display: grid;
+    place-items: center;
+    gap: 10px;
+}
+
+.likeButton {
+    background-color: white;
+    border: inherit;
+}
+
+.likeIcon:hover {
+    cursor: pointer;
+}
+
+#editPost {
+    display: inline;
+    cursor: pointer;
+    color: blue;
+}

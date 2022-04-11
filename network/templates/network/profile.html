@@ -1,0 +1,65 @@
+{% extends "network/layout.html" %}
+{%load static%}
+
+{%block profile %}
+<div id="profile">
+    <div>
+        <h3 id="userProfileTittle" class="text-center"> {{userProfile}} </h3>
+        <div class="text-center" id="followContainer">
+          <div class="following">
+            <p > {{usersFollowing|length}} </p> <span>Following </span>
+          </div>
+          <div class="followers">
+            <p> {{usersFollowers|length}} </p> <span>Followers</span> 
+          </div>
+          {% if request.user != userProfile%}
+          <form action="" method="POST">
+            <input hidden type="text" name="newFollower" id="" value="{{userProfile}}">
+            <button type="submit" id="followUser" class="btn btn-primary">{{followButton}}</button>
+          </form>
+          {% endif %}
+        </div>
+    </div>
+    <div>
+        {%for posts in profilePosts%}
+          <div data-id="{{posts.id}}" class="allPosts">
+            <a class="postUser" href="{% url 'profile' posts.user %}">{{posts.user}}</a>
+            <span class="postContent">{{posts.content}} </span>
+            {%if activeUserProfile == posts.user%}
+                  <a id="editPost" >Edit</a>
+            {% endif %}
+            <small class="postTimestamp">At {{posts.timestamp}}</small>
+            <span class="postLikes">
+              {%if user.username in posts.likes.all|join:"," %} 
+              <svg class="likeIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                <path data-id="{{posts.id}}" data-user="{{posts.user}}" fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+              </svg>
+              {%else%}
+              <svg class="likeIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                <path data-id="{{posts.id}}" data-user="{{posts.user}}" fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+              </svg>
+              {% endif %}
+            {{posts.likes.all|length}} users liked this post
+          </span>
+          </div>
+        <hr>
+        {%endfor%} 
+    </div>
+</div>
+<div>
+    <nav >
+        <ul class="pagination">
+            {%if profilePosts.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="{%url 'profile' user %}?page={{profilePosts.previous_page_number}}">Previous</a>
+          </li>
+            {%endif%}
+            {%if profilePosts.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="{%url 'profile' user %}?page={{profilePosts.next_page_number}}">Next</a>
+          </li>
+            {%endif%}
+        </ul>
+      </nav>
+</div>
+{%endblock%}
